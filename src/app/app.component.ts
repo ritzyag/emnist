@@ -55,6 +55,7 @@ export class AppComponent implements OnInit {
 
   async loadModel() {
     this.model = await tf.loadModel('/assets/model.json');
+    console.log('heyy');
   }
 
   async predict(imageData: ImageData) {
@@ -63,14 +64,14 @@ export class AppComponent implements OnInit {
 
       // Convert the canvas pixels to 
       let img = tf.fromPixels(imageData, 1);
-      img = img.reshape([1, 28, 28, 1]);
+      img = img.reshape([1, 28, 28]);
       img = tf.cast(img, 'float32');
 
       // Make and format the predications
       const output = this.model.predict(img) as any;
-
       // Save predictions on the component
       this.predictions = Array.from(output.dataSync()); 
+      console.log(output.dataSync());
     });
 
   }
